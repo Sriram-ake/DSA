@@ -1,16 +1,16 @@
 class Solution {
     public int timeRequiredToBuy(int[] tickets, int k) {
-        int n = tickets.length;
-        int target = tickets[k];
-        int ans = 0;
-        for (int i = 0; i < n; i++) {
-            if (i <= k) {
-                ans += Math.min(tickets[i], target);
-            }
-            if (i > k) {
-                ans += Math.min(tickets[i], target - 1);
-            }
+        Deque<Integer> q=new ArrayDeque<>();
+        for(int i=0;i<tickets.length;i++) {
+            q.add(i);
         }
-        return ans;
+        int turns=0;
+        while(tickets[k]>0) {
+            int front=q.remove();
+            tickets[front]-=1;
+            turns++;
+            if(tickets[front] > 0) q.add(front) ;
+        }
+        return turns;
     }
 }
